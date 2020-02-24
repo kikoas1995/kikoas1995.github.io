@@ -1,0 +1,18 @@
+I"<p>In this post I will relate how I completed every exercise in order to certify as a <strong>SLAE</strong> (<em>Security Linux Assembly Expert</em>), which is
+a certification from <strong>PentesterAcademy</strong>. I decided to take it because I heard very good references about it, and also because I need to prepare for my next objective, the OSCE.</p>
+
+<p>In short, this certification requires the student to be able to develope code with easyness in <strong>Assembly x86</strong>, as well as master the <a href="https://www.gnu.org/software/gdb/">gdb</a> 
+If you want to look up the exam requirements, <a href="https://www.youtube.com/watch?v=agwqgm52p3I">here</a> is the official video from <a href="https://www.youtube.com/watch?v=agwqgm52p3I">TheSecurityTube</a> that explains every required exercise.</p>
+
+<p>Without more explanations, let’s dive into the exercises!</p>
+
+<h3 id="here-is-an-unordered-list">Here is an unordered list:</h3>
+
+<ul>
+  <li>Item foo</li>
+  <li>Item bar</li>
+  <li>Item baz</li>
+  <li>Item zip</li>
+</ul>
+
+:ET
