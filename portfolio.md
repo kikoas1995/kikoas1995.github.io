@@ -19,7 +19,7 @@ My main skills are:
 * **Ethical Hacking:** Systems Pentesting, BOF, port forwarding, AV evasion, persistence, AD pentesting...
 * **Developer:** I have high skills in `Python`, `Java` and `C`, among others.
 
-If you wanna contact me, feel frere to do it via any of the links below :)
+If you wanna contact me, feel free to do it via any of the links below :)
 
 * ![alt text](https://img.icons8.com/color/16/000000/telegram-app.png) [Telegram](https://t.me/kikoas1995)
 * ![alt text](https://img.icons8.com/office/16/000000/gmail-login.png) [E-mail](mailto:franciscoandreusanz@gmail.com?Subject=Hola%20Kiko!)
