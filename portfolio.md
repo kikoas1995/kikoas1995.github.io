@@ -21,9 +21,9 @@ My main skills are:
 
 If you wanna contact me, feel free to do it via any of the links below :)
 
-* ![alt text](https://img.icons8.com/color/16/000000/telegram-app.png) [Telegram](https://t.me/kikoas1995)
-* ![alt text](https://img.icons8.com/office/16/000000/gmail-login.png) [E-mail](mailto:franciscoandreusanz@gmail.com?Subject=Hola%20Kiko!)
-* ![alt text](https://www.turcaambalaj.com/wp-content/uploads/2019/10/icons8-linkedin-16.png) [Linkedin](https://www.linkedin.com/in/francisco-andreu-170137114/)
+* ![alt text](https://kikoas1995.github.io/assets/icon1.png) [Telegram](https://t.me/kikoas1995)
+* ![alt text](https://kikoas1995.github.io/assets/icon2.png) [E-mail](mailto:franciscoandreusanz@gmail.com?Subject=Hola%20Kiko!)
+* ![alt text](https://kikoas1995.github.io/assets/icon3.png) [Linkedin](https://www.linkedin.com/in/francisco-andreu-170137114/)
 
 
 
