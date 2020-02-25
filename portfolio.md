@@ -12,12 +12,14 @@ I have a humongous interest in anything related to cybersecurity, but I put spec
 I am currently working as a Blue-teamer. My main tasks are implementing new connectors for ArcSight SIEM, automatizing processess such as SSH/SFTP/FTP connections between different machines, generating alerts/reports, documenting... 
 Additionally, I have also worked doing Cybersecurity regulatory audits such as NIST Cybersecurity Framework or ISO 27k1. I also hold some months of experience as a defense&space software developer, where I participated in several parts of Software Development Cycle such as design, implementation and testing.
 
-However, what I have always wanted, my main focus, is to become part of a Red team and perform internal/external audits, perform web and mobile app penetration testing, WiFi audits... I also have a lot of interest for RFID, hardware hacking (Raspberry and arduino projects) and physical pentesting.
+However, what I have always wanted, my main focus, is to become part of a Red team and perform internal/external audits, perform web and mobile app penetration testing, WiFi audits... I also have a lot of interest for RFID technologies, hardware hacking (Raspberry and arduino projects) and physical pentesting.
+
+I will try to publish things ~~frequently~~, so stay tuned.
 
 My main skills are:
 
 * **Ethical Hacking:** Systems Pentesting, BOF, port forwarding, AV evasion, persistence, AD pentesting...
-* **Developer:** I have high skills in `Python`, `Java` and `C`, among others.
+* **Developer:** I have high skills in `Python`, `bash`, `Java` and `C`, among others.
 
 If you wanna contact me, feel free to do it via any of the links below :)
 
