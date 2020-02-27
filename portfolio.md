@@ -14,7 +14,7 @@ Additionally, I have also worked doing Cybersecurity regulatory audits such as N
 
 However, what I have always wanted, my main focus, is to become part of a Red team and perform internal/external audits, perform web and mobile app penetration testing, WiFi audits... I also have a lot of interest for RFID technologies, hardware hacking (Raspberry and arduino projects) and physical pentesting.
 
-I will try to publish things ~~frequently~~, so stay tuned.
+I will try to publish things ~~frequently~~, such as retired HTB boxes writeups, hardware cool projects etc. so stay tuned.
 
 My main skills are:
 
