@@ -125,7 +125,7 @@ However, reviewing the page source code gives us finally some valuable info! It 
 ![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/fuzz.PNG)
 
 Also, we can download it by browsing into http://10.10.10.147/myapp. `curl -v -XGET http://10.10.10.147/myapp -o myapp` 
-![](https://guides.github.com/activities/hello-world/branching.png)
+![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/download_bin.PNG)
 
 It smells like a challenge similar to the BOF from the OSCP :). We need to confirm it sending a large message to the program. 
 ![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/overflow.PNG)
@@ -195,7 +195,6 @@ Now let's crack the keepass database. We have a list of images which can be a hi
 ![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/crack_keepass.PNG)
 
 It seems that the IMG_0547.JPG, along with the password 'bullshit', is our entrance to root :).
-IMG_0547.JPG
 ![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/root_pwd.PNG)
 
 Performing a su root with the password retrieved leads us to our beloved root shell. Reading the flags from here is trivial.
