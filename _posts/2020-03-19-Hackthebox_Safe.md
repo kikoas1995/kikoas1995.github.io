@@ -135,7 +135,10 @@ Yep, we go the buffer overflow. Let's run `checksec` to see if it has any securi
 
 Yikes, **NX enabled** (non-executable stack). We can not simply put our shellcode in the stack to jump and execute it. 
 
-After opening the binary with **Ghidra** and looking into the decompiled code, we can ensure that there exists the buffer overflow as only **112 characters** are reserved for the string. Also, the function system is called, which can allow us to execute remote code via ROP. Obviously, the argument passed to this function is not a shell. It is actually the _uptime_ binary:
+After opening the binary with **Ghidra** and looking into the decompiled code, we can ensure that there exists the buffer overflow as only **112 characters** are reserved for the string.
+
+![](https://github.com/kikoas1995/kikoas1995.github.io/blob/master/assets/2020-03-19-Hackthebox_Safe/decompiledC.PNG)
+Also, the function system is called, which can allow us to execute remote code via ROP. Obviously, the argument passed to this function is not a shell. It is actually the _uptime_ binary:
 ![](https://kikoas1995.github.io/assets/2020-03-19-Hackthebox_Safe/uptime_rdi.PNG)
 ![](uptime exec)
 
