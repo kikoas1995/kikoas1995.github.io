@@ -13,7 +13,7 @@ The vulnerability got to compromise an API through an [XXE OOB](another-page) vu
 
 Let's take a look on the original request from the page, intercepted with burp:
 
-```json
+```
 POST blah/blah HTTP/1.1
 Content-Type: application/json
 User-Agent: PostmanRuntime/7.26.3
