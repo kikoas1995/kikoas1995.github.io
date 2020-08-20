@@ -1,5 +1,5 @@
 ---
-title: Another Sample Page
+title: From XXE OoB to NTLM thief
 published: true
 ---
 # [](#header-1) From XXE to NTLM thief!
@@ -74,7 +74,7 @@ I tried a basic Proof of concept with Burp Collaborator:
 
 Looks like I got profit :D:
 
-![](https://github.com/kikoas1995/kikoas1995.github.io/tree/master/assets/2020-08-20-From-XXE-OOB-to-NTLM-thief/burp_collab.png)
+![](https://raw.githubusercontent.com/kikoas1995/kikoas1995.github.io/master/assets/2020-08-20-From-XXE-OOB-to-NTLM-thief/burp_collab.png)
 
 However, the response from the server shows nothing to me, so it is time to get `out of band`. 
 
@@ -147,11 +147,11 @@ My external DTD will look like this:
 What does it do? It basically forces the victim to connect to a SMB share exposed. This requires however a very bad network configuration that allows outbound traffic to unauthenticated rogue SMB exposed shares (spoiler: this is the case lol):
 Now I just need to host a SMB capture server using metasploit:
 
-![](https://github.com/kikoas1995/kikoas1995.github.io/tree/master/assets/2020-08-20-From-XXE-OOB-to-NTLM-thief/msfsmb.png)
+![](https://raw.githubusercontent.com/kikoas1995/kikoas1995.github.io/master/assets/2020-08-20-From-XXE-OOB-to-NTLM-thief/msfsmb.png)
 
 Bingo!
 
-![](https://github.com/kikoas1995/kikoas1995.github.io/tree/master/assets/2020-08-20-From-XXE-OOB-to-NTLM-thief/ntlm.png)
+![](https://raw.githubusercontent.com/kikoas1995/kikoas1995.github.io/master/assets/2020-08-20-From-XXE-OOB-to-NTLM-thief/smb.png)
 
 This is a win :D. In order to use this hash, we could use various methods:
 
