@@ -1,6 +1,6 @@
 ---
 title: Another Sample Page
-published: false
+published: true
 ---
 # [](#header-1) From XXE to NTLM thief!
 
