@@ -24,13 +24,13 @@ Content-Length: 3292
 
 {
   "device": {
-    "brand": "Apple",
-    "model": "iPhone",
-    "os": "12.1.2",
+    "brand": "xx",
+    "model": "xx",
+    "os": "xx",
     "deviceType": 1,
     "deviceOs": 1,
     "userInformation": {
-      "phoneNumber": "650371725",
+      "phoneNumber": "xxx",
       "owner": {
         "firstName": "peep ",
         "surName": null,
@@ -99,7 +99,7 @@ Content-Length: 3292
               &lt;userdata&gt;
               &lt;language code=&quot;es&quot;&gt;
               &lt;field name=&quot;NIF&quot; attributeid=&quot;3&quot;&gt;
-              34007678Q&lt;/field&gt;
+              xx&lt;/field&gt;
               &lt;field name=&quot;Tipo Vehiculo&quot; attributeid=&quot;4&quot;&gt;
               Moto&lt;/field&gt;
               &lt;field name=&quot;Marca&quot; attributeid=&quot;5&quot;&gt;
@@ -107,7 +107,7 @@ Content-Length: 3292
               &lt;field name=&quot;Modelo&quot; attributeid=&quot;6&quot;&gt;
               &lt;/field&gt;
               &lt;field name=&quot;Matrícula&quot; attributeid=&quot;7&quot;&gt;
-              0362FPG&lt;/field&gt;
+              xx&lt;/field&gt;
               &lt;field name=&quot;Combustible&quot; attributeid=&quot;9&quot;&gt;
               &lt;/field&gt;
               &lt;/language&gt;
@@ -155,11 +155,11 @@ First thing I thought when I saw the request was the XML parameters of the data 
 	<userdescription>
 		<userdata>
 			<language code="es">
-				<field name="NIF" attributeid="3">34007678Q</field>
+				<field name="NIF" attributeid="3">xx</field>
 				<field name="Tipo Vehiculo" attributeid="4">Moto</field>
 				<field name="Marca" attributeid="5">Bmw </field>
 				<field name="Modelo" attributeid="6"/>
-				<field name="Matrícula" attributeid="7">0362FPG</field>
+				<field name="Matrícula" attributeid="7">xx</field>
 				<field name="Combustible" attributeid="9"/>
 			</language>
 		</userdata>
@@ -205,11 +205,11 @@ I tried a basic Proof of concept with Burp Collaborator:
 	<userdescription>
 		<userdata>
 			<language code="es">
-				<field name="NIF" attributeid="3">34007678Q</field>
+				<field name="NIF" attributeid="3">xx</field>
 				<field name="Tipo Vehiculo" attributeid="4">Moto</field>
 				<field name="Marca" attributeid="5">Bmw </field>
 				<field name="Modelo" attributeid="6"/>
-				<field name="Matrícula" attributeid="7">0362FPG</field>
+				<field name="Matrícula" attributeid="7">xx</field>
 				<field name="Combustible" attributeid="9"/>
 			</language>
 		</userdata>
