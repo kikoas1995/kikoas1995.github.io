@@ -1,11 +1,11 @@
 ---
-title: From XXE OoB to NTLM thief
+title: From XXE OoB to NTLM hash steal
 published: true
 ---
 I am writing this post because of a recent chain of cool vulnerabilities I got the opportuninty to exploit during a pentest.
 
 For security reasons, I am not going to reveal the name of the company, although the bugs have been mitigated.
-The vulnerability got to compromise an API through an [XXE OOB](another-page) vulnerability, from where I could read local files and also exfiltrate valuable data, such as domain name, username and NTLM hash. Finally, I `sorta` got access to a port scan just to look for internal ports.
+The vulnerability got to compromise an API through an [XXE OOB](https://portswigger.net/web-security/xxe/blind) vulnerability, from where I could read local files and also exfiltrate valuable data, such as domain name, username and NTLM hash. Finally, I *sorta* got access to a port scan just to look for internal ports.
 
 ## [](#header-2)Basic PoC
 
